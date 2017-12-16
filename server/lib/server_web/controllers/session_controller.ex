@@ -4,11 +4,11 @@ defmodule ServerWeb.SessionController do
   alias Server.Accounts
 
   def new(conn, _) do
-    render(conn, "new.html")
+    render conn, "new.html"
   end
 
-  def create(conn, %{"user" => %{"email" => email, "password" => password}}) do
-    case Accounts.authenticate_by_email_password(email, password) do
+  def create(conn, %{"user" => %{"username" => username, "password" => password}}) do
+    case Accounts.authenticate_by_username_password(username, password) do
       {:ok, user} ->
         conn
         |> put_flash(:info, "Welcome Back!")
@@ -17,7 +17,7 @@ defmodule ServerWeb.SessionController do
         |> redirect(to: "/")
       {:error, :unauthorized} ->
         conn
-        |> put_flash(:error, "Bade email/password combination")
+        |> put_flash(:error, "Bad username/password combination")
         |> redirect(to: session_path(conn, :new))
       end
   end

@@ -14,12 +14,13 @@ defmodule ServerWeb.Router do
   end
 
   scope "/", ServerWeb do
-    pipe_through :browser
-
+    pipe_through [:browser, :authenticate_user]
     get "/", PageController, :index
-    resources "/users", UserController
-    resources "/sessions", SessionController, only: [:new, :create, :delete],
-                                              singleton: true
+    get "/register", UserController, :new
+    post "/register", UserController, :create
+    get "/login", SessionController, :new
+    post "/login", SessionController, :create
+    delete "/logout", SessionController, :delete
   end
 
   # Other scopes may use custom stacks.
@@ -31,11 +32,9 @@ defmodule ServerWeb.Router do
     case get_session(conn, :user_id) do
       nil ->
         conn
-        |> Phoenix.Controller.put_flash(:error, "Login required")
-        |> Phoenix.Controller.redirect(to: "/")
-        |> halt()
       user_id ->
         assign(conn, :current_user, Server.Accounts.get_user!(user_id))
     end
   end
+
 end

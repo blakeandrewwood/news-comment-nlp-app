@@ -5,7 +5,7 @@ defmodule Server.Accounts.Credential do
 
 
   schema "credentials" do
-    field :email, :string
+    field :password, :string
     belongs_to :user, User
 
     timestamps()
@@ -14,8 +14,7 @@ defmodule Server.Accounts.Credential do
   @doc false
   def changeset(%Credential{} = credential, attrs) do
     credential
-    |> cast(attrs, [:email])
-    |> validate_required([:email])
-    |> unique_constraint(:email)
+    |> cast(attrs, [:password])
+    |> validate_required([:password])
   end
 end

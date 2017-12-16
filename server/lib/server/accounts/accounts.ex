@@ -111,15 +111,16 @@ defmodule Server.Accounts do
   end
 
   @doc """
-  Authenticates user by email and password
+  Authenticates user by username and password
 
   ## Examples
   """
-  def authenticate_by_email_password(email, _password) do
+  def authenticate_by_username_password(username, password) do
     query =
       from u in User,
+        where: u.username == ^username,
         inner_join: c in assoc(u, :credential),
-        where: c.email == ^email
+        where: c.password == ^password
 
     case Repo.one(query) do
       %User{} = user -> {:ok, user}

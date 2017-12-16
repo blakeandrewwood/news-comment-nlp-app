@@ -1,5 +1,38 @@
-<h2>New User</h2>
-
-<%= render "form.html", Map.put(assigns, :action, user_path(@conn, :create)) %>
-
-<span><%= link "Back", to: user_path(@conn, :index) %></span>
+<div class="card">
+  <div class="card-content">
+    <h3 class="center-align">Register</h3>
+    <%= form_for @changeset, user_path(@conn, :create), fn f -> %>
+      <%= if @changeset.action do %>
+        <p class="center-align red-text">Oops, something went wrong! Please check the errors below.</p>
+      <% end %>
+      <div class="row">
+        <div class="input-field col s12">
+          <%= text_input f, :username, class: "validate" %>
+          <%= label f, :username %>
+          <%= error_tag f, :username %>
+        </div>
+      </div>
+      <%= inputs_for f, :credential, fn cf -> %>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= password_input cf, :password, class: "validate" %>
+            <%= label cf, :password %>
+            <%= error_tag cf, :password %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= password_input cf, :confirm_password, class: "validate" %>
+            <%= label cf, :confirm_password %>
+            <%= error_tag cf, :confirm_password %>
+          </div>
+        </div>
+      <% end %>
+      <div class="row">
+        <div class="input-field col s12">
+          <%= submit "Submit", [class: "btn right"] %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

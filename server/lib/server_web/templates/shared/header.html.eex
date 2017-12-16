@@ -1,10 +1,25 @@
 <nav>
   <div class="nav-wrapper" style="padding: 0 2rem">
-    <a href="#" class="brand-logo">Site Discussion</a>
+    <a href="/" class="brand-logo">Site Discussion</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="/sign-in">Sign In</a></li>
-      <li><a href="/register">Register</a></li>
-      <li><div class="chip teal white-text">Username</div></li>
+      <%= if assigns[:current_user] do %>
+        <li>
+          <a href="#" class="chip teal dropdown-button white-text" data-activates='account_dropdown'>
+            <img src="http://materializecss.com/images/yuna.jpg" alt="Contact Person">
+            <%= @current_user.username %>
+          </a>
+          <ul id='account_dropdown' class='dropdown-content'>
+            <li>
+              <%= form_for @conn, session_path(@conn, :delete), [method: :delete, as: :user], fn _ -> %>
+                <button type="submit" class="no-btn">Logout</button>
+              <% end %>
+            </li>
+          </ul>
+        </li>
+      <% else %>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/register">Register</a></li>
+      <% end %>
     </ul>
   </div>
 </nav>

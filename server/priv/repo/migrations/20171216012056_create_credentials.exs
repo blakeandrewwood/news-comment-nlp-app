@@ -3,12 +3,12 @@ defmodule Server.Repo.Migrations.CreateCredentials do
 
   def change do
     create table(:credentials) do
-      add :email, :string
+      add :password, :string
       add :user_id, references(:users, on_delete: :delete_all), null: false
+
       timestamps()
     end
 
-    create unique_index(:credentials, [:email])
     create index(:credentials, [:user_id])
   end
 end

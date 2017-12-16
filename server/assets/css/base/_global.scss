@@ -1,3 +1,21 @@
 body {
   background: #eee;
 }
+
+.container {
+  padding: 2rem 0;
+}
+
+.no-btn {
+  border: 0;
+  background: transparent;
+  font-size: 16px;
+  color: #26a69a;
+  display: block;
+  line-height: 22px;
+  padding: 14px 16px;
+}
+
+.help-block {
+  color: #F44336;
+}
