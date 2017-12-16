@@ -8,9 +8,11 @@
     <meta name="author" content="">
     <title>Hello Server!</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </head>
   <body>
-    <main role="main">
+    <%= render ServerWeb.SharedView, "header.html", assigns %>
+    <main role="main" class="container">
       <%= render @view_module, @view_template, assigns %>
     </main>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>

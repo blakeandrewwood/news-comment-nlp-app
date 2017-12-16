@@ -47,6 +47,12 @@ exports.config = {
     babel: {
       // Do not use ES6 compiler in vendor code
       ignore: [/vendor/]
+    },
+    sass: {
+      mode: "native"
+    },
+    copycat: {
+      "fonts": ["node_modules/materialize-css/dist/fonts"]
     }
   },
 
@@ -57,6 +63,15 @@ exports.config = {
   },
 
   npm: {
-    enabled: true
+    enabled: true,
+    globals: {
+      $: 'jquery',
+      jQuery: 'jquery',
+      hammer: 'hammerjs',
+      materialize: 'materialize-css'
+    },
+    styles: {
+      "materialize-css": ["dist/css/materialize.css"],
+    }
   }
 };
