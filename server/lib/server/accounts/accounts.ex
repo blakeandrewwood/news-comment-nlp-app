@@ -241,10 +241,15 @@ defmodule Server.Accounts do
     user = Repo.one(query)
     |> Repo.preload(:credential)
 
-    case check_password(user.credential, password) do
-      true -> {:ok, user}
-      _ -> {:error, :unauthorized}
+    if user != nil do
+      case check_password(user.credential, password) do
+        true -> {:ok, user}
+        _ -> {:error, :unauthorized}
+      end
+    else
+      {:error, :not_found}
     end
+
   end
 
   defp check_password(credential, password) do

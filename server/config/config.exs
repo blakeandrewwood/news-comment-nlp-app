@@ -27,8 +27,7 @@ config :server, ServerWeb.Guardian,
        issuer: "server",
        ttl: { 30, :days},
        verify_issuer: true,
-       secret_key: "cL/YYw8L4lrqWVp2DHFmV7rBnDqjjg0Or2iyhmEhvF7j4o2ZWsTMzCps31Izi+zj",
-       serializer: Server.GuardianSerializer
+       secret_key: "cL/YYw8L4lrqWVp2DHFmV7rBnDqjjg0Or2iyhmEhvF7j4o2ZWsTMzCps31Izi+zj"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

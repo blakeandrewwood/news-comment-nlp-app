@@ -1,4 +1,10 @@
 <nav>
+  <%
+  message = get_flash(@conn, :error) || get_flash(@conn, :info)
+  %>
+  <%= if message do %>
+    <script type="text/javascript">window.onload = function() { Materialize.toast('<%= message %>', 4000) }</script>
+  <% end %>
   <div class="nav-wrapper" style="padding: 0 2rem">
     <a href="/" class="brand-logo">Site Discussion</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">

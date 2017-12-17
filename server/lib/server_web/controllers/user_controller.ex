@@ -10,23 +10,10 @@ defmodule ServerWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    """
-    case Accounts.create_user(user_params) do
-      {:ok, user} ->
-        conn
-        |> put_flash(:info, "User created successfully.")
-        |> put_session(:user_id, user.id)
-        |> configure_session(renew: true)
-        |> redirect(to: "/")
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
-    end
-    """
-
     case Accounts.create_user(user_params) do
       {:ok, user} ->
         Accounts.sign_in_user(conn, user)
-        |> put_status(:created)
+        |> put_flash(:info, "Welcome.")
         |> redirect(to: "/")
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
