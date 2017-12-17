@@ -13,8 +13,17 @@ defmodule ServerWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :browser_auth do
+    plug :fetch_session
+    plug Guardian.Plug.Pipeline, module: ServerWeb.Guardian,
+      error_handler: ServerWeb.AuthErrorController
+    plug Guardian.Plug.VerifySession
+    plug Guardian.Plug.LoadResource, allow_blank: true
+    plug :get_user
+  end
+
   scope "/", ServerWeb do
-    pipe_through [:browser, :authenticate_user]
+    pipe_through [:browser, :browser_auth]
     get "/", PageController, :index
     get "/register", UserController, :new
     post "/register", UserController, :create
@@ -23,17 +32,17 @@ defmodule ServerWeb.Router do
     delete "/logout", SessionController, :delete
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", ServerWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", ServerWeb do
+    pipe_through :api
+    resources "/comments", CommentController, except: [:new, :edit]
+  end
 
-  defp authenticate_user(conn, _) do
-    case get_session(conn, :user_id) do
+  defp get_user(conn, _) do
+    case Server.Accounts.get_current_user(conn) do
       nil ->
         conn
-      user_id ->
-        assign(conn, :current_user, Server.Accounts.get_user!(user_id))
+      user ->
+        assign(conn, :current_user, user)
     end
   end
 

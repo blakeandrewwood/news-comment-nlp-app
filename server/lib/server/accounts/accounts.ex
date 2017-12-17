@@ -111,24 +111,6 @@ defmodule Server.Accounts do
   end
 
   @doc """
-  Authenticates user by username and password
-
-  ## Examples
-  """
-  def authenticate_by_username_password(username, password) do
-    query =
-      from u in User,
-        where: u.username == ^username,
-        inner_join: c in assoc(u, :credential),
-        where: c.password == ^password
-
-    case Repo.one(query) do
-      %User{} = user -> {:ok, user}
-      nil -> {:error, :unauthorized}
-    end
-  end
-
-  @doc """
   Returns the list of credentials.
 
   ## Examples
@@ -221,4 +203,55 @@ defmodule Server.Accounts do
   def change_credential(%Credential{} = credential) do
     Credential.changeset(credential, %{})
   end
+
+  def get_current_token(conn) do
+    ServerWeb.Guardian.Plug.current_token(conn)
+  end
+
+  def sign_out(conn) do
+    ServerWeb.Guardian.Plug.sign_out(conn)
+  end
+
+  """
+  def get_claims(conn) do
+    ServerWeb.Guardian.Plug.current_claims(conn)
+  end
+  """
+
+  """
+  def refresh_token(jwt) do
+    ServerWeb.Guardian.refresh(jwt)
+  end
+  """
+
+  def get_current_user(conn) do
+    ServerWeb.Guardian.Plug.current_resource(conn)
+  end
+
+  def sign_in_user(conn, user) do
+    ServerWeb.Guardian.Plug.sign_in(conn, user)
+  end
+
+  def authenticate(%{"username" => username, "password" => password}) do
+    query =
+      from u in User,
+        where: u.username == ^username,
+        inner_join: c in assoc(u, :credential)
+
+    user = Repo.one(query)
+    |> Repo.preload(:credential)
+
+    case check_password(user.credential, password) do
+      true -> {:ok, user}
+      _ -> {:error, :unauthorized}
+    end
+  end
+
+  defp check_password(credential, password) do
+    case credential do
+      nil -> Comeonin.Bcrypt.dummy_checkpw()
+      _ -> Comeonin.Bcrypt.checkpw(password, credential.password_hash)
+    end
+  end
+
 end

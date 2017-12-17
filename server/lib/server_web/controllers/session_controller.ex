@@ -8,6 +8,7 @@ defmodule ServerWeb.SessionController do
   end
 
   def create(conn, %{"user" => %{"username" => username, "password" => password}}) do
+    """
     case Accounts.authenticate_by_username_password(username, password) do
       {:ok, user} ->
         conn
@@ -19,12 +20,28 @@ defmodule ServerWeb.SessionController do
         conn
         |> put_flash(:error, "Bad username/password combination")
         |> redirect(to: session_path(conn, :new))
-      end
+    end
+    """
+
+    case Accounts.authenticate(%{"username" => username, "password" => password}) do
+      {:ok, user} ->
+        Accounts.sign_in_user(conn, user)
+        |> redirect(to: "/")
+      {:error, :unauthorized} ->
+        conn
+        |> redirect(to: session_path(conn, :new))
+    end
+
   end
 
   def delete(conn, _) do
+    """
     conn
     |> configure_session(drop: true)
+    |> redirect(to: "/")
+    """
+
+    Accounts.sign_out(conn)
     |> redirect(to: "/")
   end
 end

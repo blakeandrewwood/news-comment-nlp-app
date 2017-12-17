@@ -35,7 +35,11 @@ defmodule Server.Content do
       ** (Ecto.NoResultsError)
 
   """
-  def get_comment!(id), do: Repo.get!(Comment, id)
+  def get_comment!(id) do
+    Comment
+    |> Repo.get!(id)
+    |> Repo.preload(user: :credentials)
+  end
 
   @doc """
   Creates a comment.

@@ -1,12 +1,12 @@
 defmodule Server.Content.Comment do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Server.Content.{Comment, User}
+  alias Server.Content.Comment
 
 
   schema "comments" do
     field :body, :string
-    belongs_to :user, User
+    belongs_to :user, Server.Accounts.User
 
     timestamps()
   end
