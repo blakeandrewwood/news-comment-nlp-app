@@ -1,26 +1,29 @@
 <div class="carousel carousel-slider center">
 
-  <div class="carousel-item" href="#three!" style="padding: 20px">
-    <div class="card sticky-action small" style="height: 100%">
-      <div class="card-image">
-        <img src="http://materializecss.com/images/sample-1.jpg">
-        <span class="card-title">Card Title</span>
-      </div>
-      <div class="card-content">
-        <p>I am a very simple card. I am good at containing small bits of information.
-        I am convenient because I require little markup to use effectively.</p>
-      </div>
-      <div class="card-action">
-        <a href="#">This is a link</a>
+  <%= for article <- @news do %>
+    <div class="carousel-item" href="#three!" style="padding: 20px">
+      <div class="card sticky-action small" style="height: 100%">
+        <div class="card-image">
+          <img src="<%= article.image %>" alt="Article Image">
+          <span class="card-title"><%= article.title %></span>
+        </div>
+        <div class="card-content">
+          <p><%= article.excerpt %></p>
+        </div>
+        <div class="card-action">
+          <a href="<%= article.link %>" target="_blank">See Article</a>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 
 </div>
 
 <div class="section">
   <div class="chip teal white-text" id="num_comments"><%= @num_comments %> Comments</div>
-  <div class="chip">Topic</div>
+  <%= for topic <- @topics do %>
+    <div class="chip"><%= topic %></div>
+  <% end %>
 </div>
 
 <%= if assigns[:current_user] do %>
