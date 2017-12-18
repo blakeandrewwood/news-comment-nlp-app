@@ -9,8 +9,10 @@ import {
 
 $(document).ready(function() {
 
+  // Misc features
   $('.carousel').carousel();
 
+  // Comments
   initializeCommentForm();
   initializeComments();
 
