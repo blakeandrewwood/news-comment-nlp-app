@@ -1,20 +1,15 @@
-<div class="comment">
+<div class="comment" data-id="<%= @item.id %>" data-timestamp="<%= @item.inserted_at %>">
   <div class="comment__content">
     <div class="card">
       <div class="card-content">
         <h6><b><%= @item.user.username %></b>
-          <span class="comment__timestamp right-align grey-text" data-timestamp="<%= @item.inserted_at %>"></span>
+          <span class="comment__timestamp right-align grey-text"></span>
         </h6>
         <p><%= @item.body %></p>
       </div>
       <div class="card-action">
         <a href="" class="comment-reply">Reply</a>
-        <a class='dropdown-button right' href='#' data-activates='dropdown1'>Options</a>
-        <!--
-        <ul id='dropdown1' class='dropdown-content'>
-          <li><a href="#!">Delete</a></li>
-        </ul>
-        -->
+        <a href="" class="comment-delete right">Delete</a>
       </div>
     </div>
   </div>

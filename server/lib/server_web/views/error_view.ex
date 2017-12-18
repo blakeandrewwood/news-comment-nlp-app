@@ -13,6 +13,13 @@ defmodule ServerWeb.ErrorView do
     "Internal server error"
   end
 
+  def render("400.json", %{message: message}) do
+    %{
+      status: 400,
+      message: message
+    }
+  end
+
   # In case no render clause matches or no
   # template is found, let's render it as 500
   def template_not_found(_template, assigns) do

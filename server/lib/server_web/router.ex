@@ -42,8 +42,12 @@ defmodule ServerWeb.Router do
   end
 
   scope "/api", ServerWeb do
-    pipe_through [:api, :browser_auth]
-    resources "/comments", CommentController, except: [:new, :edit]
+    pipe_through :api
+    resources "/comments", CommentController, only: [:index, :show]
+    scope "/" do
+      pipe_through :authorized
+      resources "/comments", CommentController, only: [:create, :update, :delete]
+    end
   end
 
   defp get_user(conn, _) do

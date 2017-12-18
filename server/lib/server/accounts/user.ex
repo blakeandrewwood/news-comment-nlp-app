@@ -7,6 +7,7 @@ defmodule Server.Accounts.User do
   schema "users" do
     field :username, :string
     has_one :credential, Credential
+    has_many :comments, Server.Content.Comment
 
     timestamps()
   end

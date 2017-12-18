@@ -212,18 +212,6 @@ defmodule Server.Accounts do
     ServerWeb.Guardian.Plug.sign_out(conn)
   end
 
-  """
-  def get_claims(conn) do
-    ServerWeb.Guardian.Plug.current_claims(conn)
-  end
-  """
-
-  """
-  def refresh_token(jwt) do
-    ServerWeb.Guardian.refresh(jwt)
-  end
-  """
-
   def get_current_user(conn) do
     ServerWeb.Guardian.Plug.current_resource(conn)
   end
@@ -249,7 +237,6 @@ defmodule Server.Accounts do
     else
       {:error, :not_found}
     end
-
   end
 
   defp check_password(credential, password) do

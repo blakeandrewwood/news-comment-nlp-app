@@ -57,7 +57,7 @@ defmodule Server.Content do
   def get_comment!(id) do
     Comment
     |> Repo.get!(id)
-    |> Repo.preload(user: :credentials)
+    |> Repo.preload(:user)
   end
 
   @doc """

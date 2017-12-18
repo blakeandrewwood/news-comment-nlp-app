@@ -21,20 +21,41 @@ import "phoenix_html"
 // import socket from "./socket"
 
 /**
- * Submits comment to api
- * @param {Object} params
- * @param {Object} params.comment
- * @param {string} params.comment.body
+ * Create comment
+ * @param {Object} comment
  */
-function submitComment(params) {
-  Materialize.toast('Comment submitted.', 4000);
+function submitComment(comment) {
   $.ajax({
     url: '/api/comments',
     dataType: 'json',
     type: 'POST',
     contentType: 'application/json',
-    data: JSON.stringify(params),
+    data: JSON.stringify({ comment: comment }),
     processData: false,
+    success: function(data) {
+      Materialize.toast('Comment submitted.', 4000);
+    },
+    error: function(jqXhr, textStatus, errorThrown){
+      Materialize.toast('Error: ' + errorThrown, 4000);
+    }
+  });
+}
+
+/**
+ * Delete comment
+ * @param {string} commentId
+ */
+function deleteComment(commentId) {
+  $.ajax({
+    url: '/api/comments/' + commentId,
+    dataType: 'json',
+    type: 'DELETE',
+    contentType: 'application/json',
+    data: JSON.stringify({ id: commentId }),
+    processData: false,
+    success: function(data) {
+      Materialize.toast('Comment deleted.', 4000);
+    },
     error: function( jqXhr, textStatus, errorThrown ){
       Materialize.toast('Error: ' + errorThrown, 4000);
     }
@@ -66,18 +87,17 @@ $(document).ready(function() {
     event.preventDefault();
     let body = $('#comment').val();
     let data = {
-      comment: {
-        body: body
-      }
+      body: body
     };
+    $('#comment').val("");
     submitComment(data);
   });
 
   $('.comment').each(function() {
-    let commentTimestamp= $(this).find('.comment__timestamp')[0];
-    let timestamp = $(commentTimestamp).data().timestamp;
+    let timestamp = $(this).data().timestamp;
     let date = new Date(timestamp);
     let timeFromNow = moment(date).fromNow();
+    let commentTimestamp= $(this).find('.comment__timestamp')[0];
     $(commentTimestamp).text(timeFromNow);
   });
 
@@ -87,10 +107,8 @@ $(document).ready(function() {
     let commentBody = $(comment).find("textarea[name='comment_body']")[0];
     let commentId = $(comment).find("input[name='comment_id']")[0];
     let data = {
-      comment: {
-        body: $(commentBody).val(),
-        comment_id: $(commentId).val()
-      }
+      body: $(commentBody).val(),
+      comment_id: $(commentId).val()
     };
     $(commentBody).val("");
     toggleCommentReply(comment);
@@ -103,5 +121,11 @@ $(document).ready(function() {
     toggleCommentReply(comment);
   });
 
+  $('.comment-delete').click(function (event) {
+    event.preventDefault();
+    let comment = $(this).parents('.comment')[0];
+    let commentId = $(comment).data().id;
+    deleteComment(commentId);
+  });
 
 });

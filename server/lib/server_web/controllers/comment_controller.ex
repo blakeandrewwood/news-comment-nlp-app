@@ -16,7 +16,7 @@ defmodule ServerWeb.CommentController do
   def create(conn, %{"comment" => comment_params}) do
     user = Accounts.get_current_user(conn)
     new_comment_params = Map.put(comment_params, "user_id", user.id)
-    IO.inspect new_comment_params
+
     with {:ok, %Comment{} = comment} <- Content.create_comment(new_comment_params) do
       conn
       |> put_status(:created)
@@ -32,16 +32,31 @@ defmodule ServerWeb.CommentController do
 
   def update(conn, %{"id" => id, "comment" => comment_params}) do
     comment = Content.get_comment!(id)
+    user = Accounts.get_current_user(conn)
 
-    with {:ok, %Comment{} = comment} <- Content.update_comment(comment, comment_params) do
-      render(conn, "show.json", comment: comment)
+    if user.id != comment.user_id do
+      conn
+      |> put_status(400)
+      |> render(ServerWeb.ErrorView, "error.json", %{message: "Bad Request"})
+    else
+      with {:ok, %Comment{} = comment} <- Content.update_comment(comment, comment_params) do
+        render(conn, "show.json", comment: comment)
+      end
     end
   end
 
   def delete(conn, %{"id" => id}) do
     comment = Content.get_comment!(id)
-    with {:ok, %Comment{}} <- Content.delete_comment(comment) do
-      send_resp(conn, :no_content, "")
+    user = Accounts.get_current_user(conn)
+
+    if user.id != comment.user_id do
+      conn
+      |> put_status(400)
+      |> render(ServerWeb.ErrorView, "error.json", %{message: "Bad Request"})
+    else
+      with {:ok, %Comment{}} <- Content.delete_comment(comment) do
+        send_resp(conn, :no_content, "")
+      end
     end
   end
 end
