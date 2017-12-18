@@ -27,7 +27,7 @@
   <form class="card" id="submit_comment_form">
     <div class="card-content">
       <div class="input-field">
-        <textarea id="comment" class="materialize-textarea" data-length="120"></textarea>
+        <textarea id="comment" class="materialize-textarea" data-length="1000"></textarea>
         <label for="comment">Write Comment...</label>
       </div>
     </div>

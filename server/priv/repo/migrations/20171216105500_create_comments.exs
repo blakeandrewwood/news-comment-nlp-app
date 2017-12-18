@@ -3,7 +3,7 @@ defmodule Server.Repo.Migrations.CreateComments do
 
   def change do
     create table(:comments) do
-      add :body, :string
+      add :body, :text
       add :user_id, references(:users, on_delete: :delete_all), null: false
       add :comment_id, references(:comments, on_delete: :delete_all)
 

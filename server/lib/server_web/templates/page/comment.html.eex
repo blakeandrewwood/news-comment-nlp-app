@@ -5,7 +5,7 @@
         <h6><b><%= @comment.user.username %></b>
           <span class="comment__timestamp right-align grey-text"></span>
         </h6>
-        <p><%= @comment.body %></p>
+        <p class="comment__body"><%= @comment.body %></p>
       </div>
       <div class="card-action">
         <a href="" class="comment-reply">Reply</a>
@@ -17,7 +17,7 @@
     <input name="comment_id" type="hidden" value="<%= @comment.id %>">
     <div class="card-content">
       <div class="input-field">
-        <textarea name="comment_body" class="materialize-textarea" data-length="120"></textarea>
+        <textarea name="comment_body" class="materialize-textarea" data-length="1000"></textarea>
         <label for="comment">Reply to <%= @comment.user.username %>...</label>
       </div>
     </div>

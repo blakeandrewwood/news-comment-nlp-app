@@ -18,6 +18,7 @@ defmodule Server.Content.Comment do
     comment
     |> cast(attrs, [:body, :user_id, :comment_id])
     |> validate_required([:body, :user_id])
+    |> validate_length(:body, min: 1, max: 1000)
   end
 
 end

@@ -143,5 +143,4 @@ defmodule Server.Content do
     count + Enum.reduce(comments, 0, fn(c, acc) -> count_comments(c.comments) + acc end)
   end
 
-
 end

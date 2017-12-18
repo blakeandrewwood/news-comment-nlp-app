@@ -5,4 +5,7 @@
   &__replies {
     padding-left: 2rem;
   }
+  &__body {
+    white-space: pre-wrap;
+  }
 }

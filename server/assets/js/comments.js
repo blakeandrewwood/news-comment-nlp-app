@@ -4,6 +4,21 @@ import API from "./api"
  * TODO
  * @param {}
  */
+export function validateComment(comment) {
+  let error = null;
+  if(comment.body.length < 1) {
+    error = 'Comment must be at least 1 character';
+  }
+  if(comment.body.length > 1000) {
+    error = 'Comment must be less than 1000 characters';
+  }
+  return error;
+}
+
+/**
+ * TODO
+ * @param {}
+ */
 export function getNumComments() {
   let text = $("#num_comments").text();
   return text.match(/\d+/)[0];
@@ -113,6 +128,9 @@ export function initializeComment() {
       body: $(commentBody).val(),
       comment_id: $(commentId).val()
     };
+    if(validateComment(data)) {
+      return;
+    }
     $(commentBody).val("");
     toggleCommentReply(comment);
     API.Comments.create(data);
@@ -146,10 +164,10 @@ export function initializeCommentForm() {
     let data = {
       body: body
     };
+    if(validateComment(data)) {
+      return;
+    }
     $('#comment').val("");
     API.Comments.create(data);
   });
 }
-
-
-

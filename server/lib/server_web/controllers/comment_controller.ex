@@ -17,14 +17,10 @@ defmodule ServerWeb.CommentController do
     user = Accounts.get_current_user(conn)
     new_comment_params = Map.put(comment_params, "user_id", user.id)
 
-    IO.inspect new_comment_params
-
     with {:ok, %Comment{} = comment} <- Content.create_comment(new_comment_params) do
 
       %{"id" => comment.id}
       |> ServerWeb.RoomChannel.broadcast_new_comment
-
-      IO.inspect comment
 
       conn
       |> put_status(:created)
