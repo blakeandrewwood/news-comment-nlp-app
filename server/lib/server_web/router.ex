@@ -22,6 +22,15 @@ defmodule ServerWeb.Router do
     plug :get_user
   end
 
+  pipeline :authorized do
+    plug :fetch_session
+    plug Guardian.Plug.Pipeline, module: ServerWeb.Guardian,
+      error_handler: ServerWeb.AuthErrorController
+    plug Guardian.Plug.VerifySession
+    plug Guardian.Plug.LoadResource
+    plug :get_user
+  end
+
   scope "/", ServerWeb do
     pipe_through [:browser, :browser_auth]
     get "/", PageController, :index
@@ -33,7 +42,7 @@ defmodule ServerWeb.Router do
   end
 
   scope "/api", ServerWeb do
-    pipe_through :api
+    pipe_through [:api, :browser_auth]
     resources "/comments", CommentController, except: [:new, :edit]
   end
 

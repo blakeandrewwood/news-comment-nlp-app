@@ -1,0 +1,38 @@
+<div class="comment">
+  <div class="comment__content">
+    <div class="card">
+      <div class="card-content">
+        <h6><b><%= @item.user.username %></b>
+          <span class="comment__timestamp right-align grey-text" data-timestamp="<%= @item.inserted_at %>"></span>
+        </h6>
+        <p><%= @item.body %></p>
+      </div>
+      <div class="card-action">
+        <a href="" class="comment-reply">Reply</a>
+        <a class='dropdown-button right' href='#' data-activates='dropdown1'>Options</a>
+        <!--
+        <ul id='dropdown1' class='dropdown-content'>
+          <li><a href="#!">Delete</a></li>
+        </ul>
+        -->
+      </div>
+    </div>
+  </div>
+  <form class="comment__reply card hide">
+    <input name="comment_id" type="hidden" value="<%= @item.id %>">
+    <div class="card-content">
+      <div class="input-field">
+        <textarea name="comment_body" class="materialize-textarea" data-length="120"></textarea>
+        <label for="comment">Reply to <%= @item.user.username %>...</label>
+      </div>
+    </div>
+    <div class="card-action">
+      <button class="btn waves-effect waves-light" type="submit">Submit</button>
+    </div>
+  </form>
+  <div class="comment__replies">
+    <%= for item <- @item.comments do %>
+      <%= render ServerWeb.PageView, "comment.html", item: item %>
+    <% end %>
+  </div>
+</div>

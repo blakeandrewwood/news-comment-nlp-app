@@ -6,6 +6,8 @@ defmodule Server.Content.Comment do
 
   schema "comments" do
     field :body, :string
+    has_many :comments, Comment
+    belongs_to :comment, Comment
     belongs_to :user, Server.Accounts.User
 
     timestamps()
@@ -14,7 +16,8 @@ defmodule Server.Content.Comment do
   @doc false
   def changeset(%Comment{} = comment, attrs) do
     comment
-    |> cast(attrs, [:body])
-    |> validate_required([:body])
+    |> cast(attrs, [:body, :user_id, :comment_id])
+    |> validate_required([:body, :user_id])
   end
+
 end

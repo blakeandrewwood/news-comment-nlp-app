@@ -68,6 +68,7 @@ exports.config = {
       $: 'jquery',
       jQuery: 'jquery',
       hammer: 'hammerjs',
+      moment: 'moment',
       materialize: 'materialize-css'
     },
     styles: {

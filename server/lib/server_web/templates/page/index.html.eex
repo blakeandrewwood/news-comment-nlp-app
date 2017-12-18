@@ -1,35 +1,4 @@
 <div class="carousel carousel-slider center">
-  <div class="carousel-item" href="#one!" style="padding: 20px">
-    <div class="card sticky-action small" style="height: 100%">
-      <div class="card-image">
-        <img src="http://materializecss.com/images/sample-1.jpg">
-        <span class="card-title">Card Title</span>
-      </div>
-      <div class="card-content">
-        <p>I am a very simple card. I am good at containing small bits of information.
-        I am convenient because I require little markup to use effectively.</p>
-      </div>
-      <div class="card-action">
-        <a href="#">This is a link</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="carousel-item" href="#two!" style="padding: 20px">
-    <div class="card sticky-action small" style="height: 100%">
-      <div class="card-image">
-        <img src="http://materializecss.com/images/sample-1.jpg">
-        <span class="card-title">Card Title</span>
-      </div>
-      <div class="card-content">
-        <p>I am a very simple card. I am good at containing small bits of information.
-        I am convenient because I require little markup to use effectively.</p>
-      </div>
-      <div class="card-action">
-        <a href="#">This is a link</a>
-      </div>
-    </div>
-  </div>
 
   <div class="carousel-item" href="#three!" style="padding: 20px">
     <div class="card sticky-action small" style="height: 100%">
@@ -46,60 +15,32 @@
       </div>
     </div>
   </div>
+
 </div>
 
 <div class="section">
-  <div class="chip teal white-text">0 Comments</div>
-  <div class="chip">Topic</div>
-  <div class="chip">Topic</div>
-  <div class="chip">Topic</div>
+  <div class="chip teal white-text"><%= length(@comments) %> Comments</div>
   <div class="chip">Topic</div>
 </div>
 
 <%= if assigns[:current_user] do %>
-  <div class="card">
-    <form class="card-content col s12">
-      <div class="row">
-        <div class="input-field col s12">
-          <textarea id="comment" class="materialize-textarea" data-length="120"></textarea>
-          <label for="comment">Write Comment...</label>
-        </div>
+  <form class="card" id="submit_comment_form">
+    <div class="card-content">
+      <div class="input-field">
+        <textarea id="comment" class="materialize-textarea" data-length="120"></textarea>
+        <label for="comment">Write Comment...</label>
       </div>
-    </form>
-  </div>
+    </div>
+    <div class="card-action">
+      <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+    </div>
+  </form>
 <% end %>
 
 <div class="comments">
-  <div class="comment">
-    <div class="comment__content">
-      <div class="card">
-        <div class="card-content">
-          <h6><b>Username</b> <span class="right-align grey-text">2h</span></h6>
-          <p>This is a comment.</p>
-        </div>
-        <div class="card-action">
-          <a href="#" class="left">Reply</a>
-          <a href="#" class="left">Like</a>
-          <a class='dropdown-button right' href='#' data-activates='dropdown1'>Options</a>
-          <ul id='dropdown1' class='dropdown-content'>
-            <li><a href="#!">Delete</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="comment__replies">
-    </div>
-    <div class="comment__reply">
-      <form class="col s12">
-        <div class="row">
-          <div class="input-field col s12">
-            <textarea id="comment" class="materialize-textarea" data-length="120"></textarea>
-            <label for="comment">Reply...</label>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
+  <%= for item <- @comments do %>
+    <%= render ServerWeb.PageView, "comment.html", item: item %>
+  <% end %>
 </div>
 
 

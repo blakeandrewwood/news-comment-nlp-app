@@ -19,6 +19,25 @@ defmodule Server.Content do
   """
   def list_comments do
     Repo.all(Comment)
+    |> Repo.preload(:user)
+  end
+
+  @doc """
+  Returns the list of comments.
+
+  ## Examples
+
+      iex> list_comments()
+      [%Comment{}, ...]
+
+  """
+  def list_top_level_comments do
+    query =
+      from c in Comment,
+        where: is_nil(c.comment_id)
+
+    Repo.all(query)
+    |> Enum.map(fn(c) -> deep_load_assc_comment(c) end)
   end
 
   @doc """
@@ -105,4 +124,15 @@ defmodule Server.Content do
   def change_comment(%Comment{} = comment) do
     Comment.changeset(comment, %{})
   end
+
+  def deep_load_assc_comment(comment) do
+    new_comment = comment
+    |> Repo.preload([:comments, :user])
+
+    new_comments = new_comment.comments
+    |> Enum.map(fn(c) -> deep_load_assc_comment(c) end)
+
+    Map.put(new_comment, :comments, new_comments)
+  end
+
 end

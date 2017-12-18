@@ -4,6 +4,8 @@ defmodule ServerWeb.CommentController do
   alias Server.Content
   alias Server.Content.Comment
 
+  alias Server.Accounts
+
   action_fallback ServerWeb.FallbackController
 
   def index(conn, _params) do
@@ -12,7 +14,10 @@ defmodule ServerWeb.CommentController do
   end
 
   def create(conn, %{"comment" => comment_params}) do
-    with {:ok, %Comment{} = comment} <- Content.create_comment(comment_params) do
+    user = Accounts.get_current_user(conn)
+    new_comment_params = Map.put(comment_params, "user_id", user.id)
+    IO.inspect new_comment_params
+    with {:ok, %Comment{} = comment} <- Content.create_comment(new_comment_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", comment_path(conn, :show, comment))
