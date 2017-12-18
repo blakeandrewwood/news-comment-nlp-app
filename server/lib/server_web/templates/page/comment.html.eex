@@ -1,11 +1,11 @@
-<div class="comment" data-id="<%= @item.id %>" data-timestamp="<%= @item.inserted_at %>">
+<div class="comment" data-id="<%= @comment.id %>" data-timestamp="<%= @comment.inserted_at %>">
   <div class="comment__content">
     <div class="card">
       <div class="card-content">
-        <h6><b><%= @item.user.username %></b>
+        <h6><b><%= @comment.user.username %></b>
           <span class="comment__timestamp right-align grey-text"></span>
         </h6>
-        <p><%= @item.body %></p>
+        <p><%= @comment.body %></p>
       </div>
       <div class="card-action">
         <a href="" class="comment-reply">Reply</a>
@@ -14,11 +14,11 @@
     </div>
   </div>
   <form class="comment__reply card hide">
-    <input name="comment_id" type="hidden" value="<%= @item.id %>">
+    <input name="comment_id" type="hidden" value="<%= @comment.id %>">
     <div class="card-content">
       <div class="input-field">
         <textarea name="comment_body" class="materialize-textarea" data-length="120"></textarea>
-        <label for="comment">Reply to <%= @item.user.username %>...</label>
+        <label for="comment">Reply to <%= @comment.user.username %>...</label>
       </div>
     </div>
     <div class="card-action">
@@ -26,8 +26,10 @@
     </div>
   </form>
   <div class="comment__replies">
-    <%= for item <- @item.comments do %>
-      <%= render ServerWeb.PageView, "comment.html", item: item %>
+    <%= if Ecto.assoc_loaded?(@comment.comments) do %>
+      <%= for comment <- @comment.comments do %>
+        <%= render ServerWeb.PageView, "comment.html", comment: comment %>
+      <% end %>
     <% end %>
   </div>
 </div>

@@ -17,12 +17,21 @@ defmodule ServerWeb.CommentController do
     user = Accounts.get_current_user(conn)
     new_comment_params = Map.put(comment_params, "user_id", user.id)
 
+    IO.inspect new_comment_params
+
     with {:ok, %Comment{} = comment} <- Content.create_comment(new_comment_params) do
+
+      %{"id" => comment.id}
+      |> ServerWeb.RoomChannel.broadcast_new_comment
+
+      IO.inspect comment
+
       conn
       |> put_status(:created)
       |> put_resp_header("location", comment_path(conn, :show, comment))
       |> render("show.json", comment: comment)
     end
+
   end
 
   def show(conn, %{"id" => id}) do
@@ -55,6 +64,10 @@ defmodule ServerWeb.CommentController do
       |> render(ServerWeb.ErrorView, "error.json", %{message: "Bad Request"})
     else
       with {:ok, %Comment{}} <- Content.delete_comment(comment) do
+
+        %{"id" => comment.id}
+        |> ServerWeb.RoomChannel.broadcast_remove_comment
+
         send_resp(conn, :no_content, "")
       end
     end

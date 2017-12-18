@@ -19,7 +19,7 @@
 </div>
 
 <div class="section">
-  <div class="chip teal white-text"><%= @num_comments %> Comments</div>
+  <div class="chip teal white-text" id="num_comments"><%= @num_comments %> Comments</div>
   <div class="chip">Topic</div>
 </div>
 
@@ -38,8 +38,8 @@
 <% end %>
 
 <div class="comments">
-  <%= for item <- @comments do %>
-    <%= render ServerWeb.PageView, "comment.html", item: item %>
+  <%= for comment <- @comments do %>
+    <%= render ServerWeb.PageView, "comment.html", comment: comment %>
   <% end %>
 </div>
 
