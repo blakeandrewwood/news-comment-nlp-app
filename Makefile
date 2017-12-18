@@ -2,13 +2,13 @@ start-db: ## Start postgres in docker
 	docker-compose -f ./docker/docker-compose.yml up -d db
 
 reset-db: ## Reset database
-	cd ./server && mix ecto.reset
+	mix ecto.reset
 
 migrate-db: ## Migrate database
-	cd ./server && mix ecto.migrate
+	mix ecto.migrate
 
 start: ## Start web application
-	cd ./server && mix phx.server
+	mix phx.server
 
 #
 # Help
