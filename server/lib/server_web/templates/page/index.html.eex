@@ -19,7 +19,7 @@
 </div>
 
 <div class="section">
-  <div class="chip teal white-text"><%= length(@comments) %> Comments</div>
+  <div class="chip teal white-text"><%= @num_comments %> Comments</div>
   <div class="chip">Topic</div>
 </div>
 

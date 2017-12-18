@@ -135,4 +135,13 @@ defmodule Server.Content do
     Map.put(new_comment, :comments, new_comments)
   end
 
+  def count_comments(comments) do
+    count_comments(comments, length(comments))
+  end
+
+  def count_comments(comments, count) do
+    count + Enum.reduce(comments, 0, fn(c, acc) -> count_comments(c.comments) + acc end)
+  end
+
+
 end
