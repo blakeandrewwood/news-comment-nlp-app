@@ -29,6 +29,14 @@ config :server, ServerWeb.Guardian,
        verify_issuer: true,
        secret_key: "cL/YYw8L4lrqWVp2DHFmV7rBnDqjjg0Or2iyhmEhvF7j4o2ZWsTMzCps31Izi+zj"
 
+config :server, :aylien,
+  app_id: "c622949b",
+  app_key: "d74e27732e1b5330ee872c09e504c3df"
+
+config :server, :azure,
+  key_1: "3ed98ef5894a459eb975b6aed0990077",
+  key_2: "003a7ac610344180ac1b0c3ac123dd7e"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

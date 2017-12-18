@@ -43,7 +43,9 @@ defmodule Server.Mixfile do
       {:cowboy, "~> 1.0"},
       {:comeonin, "~> 4.0.3"},
       {:bcrypt_elixir, "~> 1.0"},
-      {:guardian, "~> 1.0"}
+      {:guardian, "~> 1.0"},
+      {:httpoison, "~> 0.13"},
+      {:poison, "~> 3.1"}
     ]
   end
 
