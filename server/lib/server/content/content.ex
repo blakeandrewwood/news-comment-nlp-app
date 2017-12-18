@@ -34,7 +34,8 @@ defmodule Server.Content do
   def list_top_level_comments do
     query =
       from c in Comment,
-        where: is_nil(c.comment_id)
+        where: is_nil(c.comment_id),
+        order_by: [desc: c.inserted_at]
 
     Repo.all(query)
     |> Enum.map(fn(c) -> deep_load_assc_comment(c) end)
@@ -127,7 +128,7 @@ defmodule Server.Content do
 
   def deep_load_assc_comment(comment) do
     new_comment = comment
-    |> Repo.preload([:comments, :user])
+    |> Repo.preload([:user, comments: from(c in Comment, order_by: [desc: c.inserted_at])])
 
     new_comments = new_comment.comments
     |> Enum.map(fn(c) -> deep_load_assc_comment(c) end)
