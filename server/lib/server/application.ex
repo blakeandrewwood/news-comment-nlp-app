@@ -6,6 +6,9 @@ defmodule Server.Application do
   def start(_type, _args) do
     import Supervisor.Spec
 
+    # DiscussionNLP
+    Server.DiscussionNLP.init()
+
     # Define workers and child supervisors to be supervised
     children = [
       # Start the Ecto repository
