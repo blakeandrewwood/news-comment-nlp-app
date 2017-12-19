@@ -7,8 +7,6 @@ defmodule ServerWeb.PageController do
     comments = Content.list_top_level_comments()
     num_comments = Content.count_comments(comments)
 
-    Server.DiscussionNLP.update()
-
     news = Server.DiscussionNLP.get_news()
     topics = Server.DiscussionNLP.get_topics()
 

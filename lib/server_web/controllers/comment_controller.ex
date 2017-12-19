@@ -19,8 +19,13 @@ defmodule ServerWeb.CommentController do
 
     with {:ok, %Comment{} = comment} <- Content.create_comment(new_comment_params) do
 
+      Server.DiscussionNLP.update()
+
       %{"id" => comment.id}
       |> ServerWeb.RoomChannel.broadcast_new_comment
+
+      ServerWeb.RoomChannel.broadcast_update_topics()
+      ServerWeb.RoomChannel.broadcast_update_news()
 
       conn
       |> put_status(:created)

@@ -55,7 +55,7 @@ export function decrementNumComments(amount) {
   numComments--;
   updateNumComments(numComments);
   $("#num_comments").addClass("pulse");
-  setTimeout(() => $("#num_comments").removeClass("pulse"), 500);
+  setTimeout(() => $("#num_comments").removeClass("pulse"), 1000);
 }
 
 /**

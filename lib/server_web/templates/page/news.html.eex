@@ -1,0 +1,25 @@
+<%= if length(@news) > 0 do %>
+  <div class="chip teal white-text">Related articles to dicusssion</div>
+  <div class="carousel carousel-slider center">
+      <%= for article <- @news do %>
+        <div class="carousel-item" href="#three!" style="padding: 20px">
+          <div class="card sticky-action small" style="height: 100%">
+            <div class="card-image">
+              <%= if article["image"]["thumbnail"]["contentUrl"] do %>
+                <img src="<%= article["image"]["thumbnail"]["contentUrl"] %>" alt="Article Image" style="filter: blur(40px);">
+              <% else %>
+                <img src="https://images.unsplash.com/photo-1481973964012-59a7f3225eb1?auto=format&fit=crop&w=1350&q=80" alt="Article Image" style="filter: blur(0px);">
+              <% end %>
+              <span class="card-title"><b><%= article["name"] %></b></span>
+            </div>
+            <div class="card-content">
+              <p><%= article["description"] %></p>
+            </div>
+            <div class="card-action">
+              <a href="<%= article["url"] %>" target="_blank">See Article</a>
+            </div>
+          </div>
+        </div>
+      <% end %>
+  </div>
+<% end %>

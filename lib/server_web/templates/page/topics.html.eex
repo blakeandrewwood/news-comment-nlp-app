@@ -1,0 +1,3 @@
+<%= for topic <- @topics do %>
+  <div class="chip"><%= topic %></div>
+<% end %>

@@ -6,7 +6,7 @@ defmodule Server.Application do
   def start(_type, _args) do
     import Supervisor.Spec
 
-    # DiscussionNLP
+    #Discussion NLP
     Server.DiscussionNLP.init()
 
     # Define workers and child supervisors to be supervised
