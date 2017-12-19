@@ -1,4 +1,4 @@
-<div class="comment" data-id="<%= @comment.id %>" data-timestamp="<%= @comment.inserted_at %>">
+<div class="comment" data-id="<%= @comment.id %>" data-user-id="<%= @comment.user_id %>" data-timestamp="<%= @comment.inserted_at %>">
   <div class="comment__content">
     <div class="card">
       <div class="card-content">

@@ -144,12 +144,15 @@ export function initializeComment() {
   });
 
   // Delete action
-  $($(this).find('.comment-delete')[0]).click(function (event) {
-    event.preventDefault();
-    let comment = $(this).parents('.comment')[0];
-    let commentId = $(comment).data().id;
-    API.Comments.del(commentId);
-  });
+  if($(this).data().userId == window.current_user_id) {
+    $($(this).find('.comment-delete')).removeClass('hide');
+    $($(this).find('.comment-delete')[0]).click(function (event) {
+      event.preventDefault();
+      let comment = $(this).parents('.comment')[0];
+      let commentId = $(comment).data().id;
+      API.Comments.del(commentId);
+    });
+  }
 
 }
 
