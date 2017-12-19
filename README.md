@@ -8,7 +8,7 @@ This application is a prototype of a web app that contains a smart discussion fo
 
 - NLP topic processing
 
-- Provieds related news based on discussion
+- Provides related news based on discussion
 
 The application utilizes Phoenix channels to provide live comment updates.
 
