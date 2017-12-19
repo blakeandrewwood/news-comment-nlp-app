@@ -1,14 +1,18 @@
-start-db: ## Start postgres in docker
-	docker-compose -f ./docker/docker-compose.yml up -d db
+build: ## Build docker image
+	docker-compose -f ./docker/docker-compose.yml build
 
-reset-db: ## Reset database
-	mix ecto.reset
-
-migrate-db: ## Migrate database
+start-local: ## Start web application
+	mix ecto.create
 	mix ecto.migrate
+	mix run priv/repo/seeds.exs
+	mix phx.server
 
 start: ## Start web application
-	mix phx.server
+	docker-compose -f ./docker/docker-compose.yml up -d postgres
+	docker-compose -f ./docker/docker-compose.yml run phoenix mix ecto.create
+	docker-compose -f ./docker/docker-compose.yml run phoenix mix ecto.migrate
+	docker-compose -f ./docker/docker-compose.yml run phoenix mix run priv/repo/seeds.exs
+	docker-compose -f ./docker/docker-compose.yml up phoenix
 
 #
 # Help

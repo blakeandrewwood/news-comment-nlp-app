@@ -1,12 +1,22 @@
-version: '3.1'
+version: '2'
 
 services:
-  nginx:
-    image: nginx
+  phoenix:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
     ports:
-     - "80:80"
-     - "443:443"
-  db:
-    image: postgres
-    ports:
-     - "5432:5432"
+      - "4000:4000"
+    volumes:
+      - ../:/app
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:9.3.17-alpine
+    volumes:
+       - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+volumes:
+    db_data:
