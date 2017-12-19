@@ -21,6 +21,9 @@ defmodule Server.Accounts.Credential do
     |> put_password_hash
   end
 
+  @doc """
+  Creates and stores password hash
+  """
   defp put_password_hash(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: password}} ->

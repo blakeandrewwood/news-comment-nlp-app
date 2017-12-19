@@ -204,22 +204,37 @@ defmodule Server.Accounts do
     Credential.changeset(credential, %{})
   end
 
+  @doc """
+  Returns current auth token
+  """
   def get_current_token(conn) do
     ServerWeb.Guardian.Plug.current_token(conn)
   end
 
+  @doc """
+  Signs user out
+  """
   def sign_out(conn) do
     ServerWeb.Guardian.Plug.sign_out(conn)
   end
 
+  @doc """
+  Returns current user
+  """
   def get_current_user(conn) do
     ServerWeb.Guardian.Plug.current_resource(conn)
   end
 
+  @doc """
+  Signs in user
+  """
   def sign_in_user(conn, user) do
     ServerWeb.Guardian.Plug.sign_in(conn, user)
   end
 
+  @doc """
+  Authenticates user
+  """
   def authenticate(%{"username" => username, "password" => password}) do
     query =
       from u in User,
@@ -239,6 +254,9 @@ defmodule Server.Accounts do
     end
   end
 
+  @doc """
+  Validates password credentials
+  """
   defp check_password(credential, password) do
     case credential do
       nil -> Comeonin.Bcrypt.dummy_checkpw()
