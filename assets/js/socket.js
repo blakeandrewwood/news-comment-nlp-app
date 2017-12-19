@@ -20,7 +20,7 @@ socket.connect()
 let channel = socket.channel("room:lobby", {})
 
 /**
- * TODO
+ * On new comment
  * @param {}
  */
 channel.on("new_comment", payload => {
@@ -29,7 +29,7 @@ channel.on("new_comment", payload => {
 
 
 /**
- * TODO
+ * On remove comment
  * @param {}
  */
 channel.on("remove_comment", payload => {
@@ -37,7 +37,7 @@ channel.on("remove_comment", payload => {
 });
 
 /**
- * TODO
+ * On update news
  * @param {}
  */
 channel.on("update_news", payload => {
@@ -45,7 +45,7 @@ channel.on("update_news", payload => {
 });
 
 /**
- * TODO
+ * On update topics
  * @param {}
  */
 channel.on("update_topics", payload => {
@@ -53,7 +53,7 @@ channel.on("update_topics", payload => {
 });
 
 /**
- * TODO
+ * Join
  * @param {}
  */
 channel.join()

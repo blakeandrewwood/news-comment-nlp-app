@@ -1,8 +1,8 @@
 import API from "./api"
 
 /**
- * TODO
- * @param {}
+ * Validates comment
+ * @param {Object} comment
  */
 export function validateComment(comment) {
   let error = null;
@@ -16,7 +16,7 @@ export function validateComment(comment) {
 }
 
 /**
- * TODO
+ * Returns number of comments
  * @param {}
  */
 export function getNumComments() {
@@ -25,8 +25,8 @@ export function getNumComments() {
 }
 
 /**
- * TODO
- * @param {}
+ * Updates number of comments display
+ * @param {number} amount
  */
 export function updateNumComments(amount) {
   let text = $("#num_comments").text();
@@ -35,10 +35,10 @@ export function updateNumComments(amount) {
 }
 
 /**
- * TODO
+ * Increments number of comments display
  * @param {}
  */
-export function incrementNumComments(amount) {
+export function incrementNumComments() {
   let numComments = getNumComments();
   numComments++;
   updateNumComments(numComments);
@@ -47,10 +47,10 @@ export function incrementNumComments(amount) {
 }
 
 /**
- * TODO
+ * Decrements number of comments display
  * @param {}
  */
-export function decrementNumComments(amount) {
+export function decrementNumComments() {
   let numComments = getNumComments();
   numComments--;
   updateNumComments(numComments);
@@ -59,8 +59,9 @@ export function decrementNumComments(amount) {
 }
 
 /**
- * TODO
- * @param {}
+ * Adds comment to comment container
+ * @param {string} html
+ * @param {number} parentId
  */
 export function addComment(html, parentId) {
   incrementNumComments();
@@ -73,8 +74,8 @@ export function addComment(html, parentId) {
 }
 
 /**
- * TODO
- * @param {}
+ * Removes comment from comment container
+ * @param {number} id
  */
 export function removeComment(id) {
   decrementNumComments();
@@ -98,7 +99,7 @@ function toggleCommentReply(comment) {
 }
 
 /**
- * TODO
+ * Initializes all comments
  * @param {}
  */
 export function initializeComments() {
@@ -106,7 +107,7 @@ export function initializeComments() {
 }
 
 /**
- * TODO
+ * Initializes comment
  * @param {}
  */
 export function initializeComment() {
@@ -157,7 +158,7 @@ export function initializeComment() {
 }
 
 /**
- * TODO
+ * Initializes comment form
  * @param {}
  */
 export function initializeCommentForm() {
