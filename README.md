@@ -1,20 +1,46 @@
-# Server
+# News Comment NLP App
 
-To start your Phoenix server:
+This application is a prototype of a web app that contains a smart discussion form.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Install Node.js dependencies with `cd assets && npm install`
-  * Start Phoenix endpoint with `mix phx.server`
+## Key Features
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+- Live updates
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+- NLP topic processing
 
-## Learn more
+- Provieds related news based on discussion
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+The application utilizes Phoenix channels to provide live comment updates.
+
+As the discussion grows on the page, we use NLP API from Aylien to process
+comments and pickup on what is being discussed.
+
+As topics grow, we then query Bing news API for related articles and display
+above the discussion.
+
+## Running
+
+`mix deps.get`
+
+`mix ecto.create`
+
+`mix ecto.migrate`
+
+`mix run priv/repo/seeds.exs`
+
+`mix phx.server`
+
+Go to `localhost:4000`
+
+## Live updating
+
+If you open up several windows, and create a comment, you can experience live
+updates as comments are published.
+
+## Resouces
+
+http://phoenixframework.org/
+
+https://aylien.com/text-api/
+
+https://azure.microsoft.com/en-us/services/cognitive-services/bing-news-search-api/

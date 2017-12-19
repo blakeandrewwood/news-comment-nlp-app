@@ -2,15 +2,20 @@
   <div class="card">
     <div class="card-content site-content">
       <h2 class="center">Welcome</h2>
-      <p class="center">This is a prototype of a site discussion web application.</p>
-      <br>
+      <p class="center">This application is a prototype of a web app that
+      contains a smart discussion form.</p>
+      <h5 class="center">Key Features</h5>
+      <ul class="center">
+        <li>Live updates</li>
+        <li>NLP topic processing</li>
+        <li>Provieds related news based on discussion</li>
+      </ul>
       <p class="center">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
       quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
       consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
       cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
       proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <br>
       <p class="center">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
       quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
