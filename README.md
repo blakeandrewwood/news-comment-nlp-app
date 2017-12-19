@@ -18,6 +18,12 @@ comments and pickup on what is being discussed.
 As topics grow, we then query Bing news API for related articles and display
 above the discussion.
 
+## Requirements
+
+- Elixir v1.5.2
+- Phoenix v1.3.0
+- PostgresSQL
+
 ## Running
 
 `mix deps.get`
