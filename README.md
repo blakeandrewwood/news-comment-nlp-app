@@ -26,6 +26,10 @@ above the discussion.
 
 ## Running
 
+`clone git@github.com:blakeandrewwood/news-comment-nlp-app.git`
+
+`cd news-comment-nlp-app`
+
 `mix deps.get`
 
 `mix ecto.create`
