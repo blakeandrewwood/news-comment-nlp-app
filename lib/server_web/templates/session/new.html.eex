@@ -1,16 +1,16 @@
 <div class="card">
   <div class="card-content">
     <h3 class="center-align">Login</h3>
-    <%= form_for @conn, session_path(@conn, :create), [method: :post, as: :user, class: "col s12"], fn f -> %>
+    <%= form_for @conn, session_path(@conn, :create), [method: :post, as: :user, class: "col s12", id: "login-form"], fn f -> %>
       <div class="row">
         <div class="input-field col s12">
-          <%= text_input f, :username, class: "validate" %>
+          <%= text_input f, :username, [id: "login-input-username", class: "validate"] %>
           <%= label f, :username %>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <%= password_input f, :password, class: "validate" %>
+          <%= password_input f, :password, [id: "login-input-password", class: "validate"] %>
           <%= label f, :password %>
         </div>
       </div>
