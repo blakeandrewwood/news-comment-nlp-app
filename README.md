@@ -22,6 +22,7 @@ above the discussion.
 
 - Elixir v1.5.2
 - Phoenix v1.3.0
+- Node
 - PostgresSQL
 
 ## Running
@@ -31,6 +32,8 @@ above the discussion.
 `cd news-comment-nlp-app`
 
 `mix deps.get`
+
+`cd assets && npm install && cd ../`
 
 `mix ecto.create`
 

@@ -19,8 +19,10 @@ defmodule Server.DiscussionNLP do
     text = Content.list_comments()
     |> Enum.reduce("", fn(c, acc) -> acc = acc <> " " <> c.body end)
 
-    # Update
+    # Update topics
     update_topics(text)
+
+    # Update news
     update_news()
   end
 
