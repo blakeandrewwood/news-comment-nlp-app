@@ -19,13 +19,16 @@ defmodule ServerWeb.CommentController do
 
     with {:ok, %Comment{} = comment} <- Content.create_comment(new_comment_params) do
 
-      Server.DiscussionNLP.update()
-
-      %{"id" => comment.id}
+      Content.get_comment!(comment.id)
       |> ServerWeb.RoomChannel.broadcast_new_comment
 
-      ServerWeb.RoomChannel.broadcast_update_topics()
-      ServerWeb.RoomChannel.broadcast_update_news()
+      Server.DiscussionNLP.update()
+
+      Server.DiscussionNLP.get_topics()
+      |> ServerWeb.RoomChannel.broadcast_update_topics
+
+      Server.DiscussionNLP.get_news()
+      |> ServerWeb.RoomChannel.broadcast_update_news
 
       conn
       |> put_status(:created)
@@ -40,21 +43,6 @@ defmodule ServerWeb.CommentController do
     render(conn, "show.json", comment: comment)
   end
 
-  def update(conn, %{"id" => id, "comment" => comment_params}) do
-    comment = Content.get_comment!(id)
-    user = Accounts.get_current_user(conn)
-
-    if user.id != comment.user_id do
-      conn
-      |> put_status(400)
-      |> render(ServerWeb.ErrorView, "error.json", %{message: "Bad Request"})
-    else
-      with {:ok, %Comment{} = comment} <- Content.update_comment(comment, comment_params) do
-        render(conn, "show.json", comment: comment)
-      end
-    end
-  end
-
   def delete(conn, %{"id" => id}) do
     comment = Content.get_comment!(id)
     user = Accounts.get_current_user(conn)
@@ -66,8 +54,16 @@ defmodule ServerWeb.CommentController do
     else
       with {:ok, %Comment{}} <- Content.delete_comment(comment) do
 
-        %{"id" => comment.id}
+        comment.id
         |> ServerWeb.RoomChannel.broadcast_remove_comment
+
+        Server.DiscussionNLP.update()
+
+        Server.DiscussionNLP.get_topics()
+        |> ServerWeb.RoomChannel.broadcast_update_topics
+
+        Server.DiscussionNLP.get_news()
+        |> ServerWeb.RoomChannel.broadcast_update_news
 
         send_resp(conn, :no_content, "")
       end
