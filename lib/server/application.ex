@@ -7,7 +7,7 @@ defmodule Server.Application do
     import Supervisor.Spec
 
     #Discussion NLP
-    Server.DiscussionNLP.init()
+    #Server.DiscussionNLP.init()
 
     # Define workers and child supervisors to be supervised
     children = [
@@ -17,6 +17,8 @@ defmodule Server.Application do
       supervisor(ServerWeb.Endpoint, []),
       # Start your own worker by calling: Server.Worker.start_link(arg1, arg2, arg3)
       # worker(Server.Worker, [arg1, arg2, arg3]),
+      supervisor(Task.Supervisor, [[name: Server.DiscussionNLP.init, restart: :temporary]]),
+      worker(Task, [&Server.DiscussionNLP.update/0], restart: :temporary),
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

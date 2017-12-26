@@ -9,21 +9,21 @@ defmodule Server.DiscussionNLP do
   Initializes ets store
   """
   def init() do
-    :ets.new(:user_lookup, [:set, :public, :named_table])
+    :ets.new(:discussion_nlp, [:set, :public, :named_table])
   end
 
   @doc """
   Returns current discussion news
   """
   def get_news() do
-    :ets.lookup(:user_lookup, :news)[:news] || []
+    :ets.lookup(:discussion_nlp, :news)[:news] || []
   end
 
   @doc """
   Returns current discussion topics
   """
   def get_topics() do
-    :ets.lookup(:user_lookup, :topics)[:topics] || []
+    :ets.lookup(:discussion_nlp, :topics)[:topics] || []
   end
 
   @doc """
@@ -46,7 +46,7 @@ defmodule Server.DiscussionNLP do
       %{status: 200, body: body} ->
         topics = body["hashtags"]
         |> Enum.map(fn(t) -> String.replace(t, "#", "") end)
-        :ets.insert_new(:user_lookup, {:topics, topics})
+        :ets.insert_new(:discussion_nlp, {:topics, topics})
     end
   end
 
@@ -59,7 +59,7 @@ defmodule Server.DiscussionNLP do
       case ServerWeb.Azure.news("keywords:(" <> keywords <> ")") do
         %{status: 200, body: body} ->
           news = body["value"]
-          :ets.insert(:user_lookup, {:news, news})
+          :ets.insert(:discussion_nlp, {:news, news})
       end
     end
   end

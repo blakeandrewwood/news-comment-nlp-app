@@ -1,9 +1,6 @@
 defmodule ServerWeb.RoomChannel do
   use Phoenix.Channel
 
-  alias Server.Content
-  alias Server.DiscussionNLP
-
   @doc """
   On join lobby
   """
