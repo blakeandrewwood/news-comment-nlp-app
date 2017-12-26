@@ -32,7 +32,7 @@ defmodule Server.DiscussionNLP do
   def update() do
     # Get comments
     text = Content.list_comments()
-    |> Enum.reduce("", fn(c, acc) -> acc = acc <> " " <> c.body end)
+    |> Enum.reduce("", fn(c, acc) -> acc <> " " <> c.body end)
 
     # Update topics
     update_topics(text)
@@ -41,9 +41,6 @@ defmodule Server.DiscussionNLP do
     update_news()
   end
 
-  @doc """
-  Updates topics
-  """
   defp update_topics(text) do
     case ServerWeb.Aylien.hashtags([{"text", text}]) do
       %{status: 200, body: body} ->
@@ -53,15 +50,12 @@ defmodule Server.DiscussionNLP do
     end
   end
 
-  @doc """
-  Updates news
-  """
   defp update_news() do
     topics = get_topics()
     if length(topics) > 0 do
       keywords = topics
       |> Enum.slice(0, 4)
-      |> Enum.reduce("", fn(t, acc) -> acc = acc <> "+" <> t end)
+      |> Enum.reduce("", fn(t, acc) -> acc <> "+" <> t end)
       case ServerWeb.Azure.news("keywords:(" <> keywords <> ")") do
         %{status: 200, body: body} ->
           news = body["value"]
